@@ -14,7 +14,7 @@ import java.util.List;
 
 public class FirMetaData extends PlaceholderExpansion {
 
-    Plugin plugin = Bukkit.getPluginManager().getPlugin("PlaceholderAPI");
+    Plugin placeholderApi = Bukkit.getPluginManager().getPlugin("PlaceholderAPI");
 
     @Override
     public @NotNull String getIdentifier() {
@@ -60,11 +60,22 @@ public class FirMetaData extends PlaceholderExpansion {
                 String value = args[2];
                 return setMetaData(player, key, value);
             }
+            case "setPlugin" -> {
+                if (args.length < 4) return "Error Args";
+                String value = args[2];
+                String pluginName = args[3];
+                return setMetaData(player, key, value, pluginName);
+            }
             case "get" -> {
                 return getMetaData(player, key);
             }
             case "remove" -> {
                 return removeMetaData(player, key);
+            }
+            case "removePlugin" -> {
+                if (args.length < 3) return "Error Args";
+                String pluginName = args[2];
+                return removeMetaData(player, key, pluginName);
             }
             case "has" -> {
                 return hasMetaData(player, key);
@@ -78,8 +89,16 @@ public class FirMetaData extends PlaceholderExpansion {
 
     // 设置值
     public String setMetaData(Player player, String key, String value){
-        player.setMetadata(key, new FixedMetadataValue(plugin, value));
+        player.setMetadata(key, new FixedMetadataValue(placeholderApi, value));
         return "OK";
+    }
+    public String setMetaData(Player player, String key, String value, String pluginName){
+        Plugin customPlugin = Bukkit.getPluginManager().getPlugin(pluginName);
+        if (customPlugin != null) {
+            player.setMetadata(key, new FixedMetadataValue(customPlugin, value));
+            return "OK";
+        }
+        return "plugin not found";
     }
 
 
@@ -87,14 +106,22 @@ public class FirMetaData extends PlaceholderExpansion {
     public String getMetaData(Player player, String key){
         List<MetadataValue> metadata = player.getMetadata(key);
         if (!metadata.isEmpty()) return metadata.getFirst().asString();
-        return "Empty Value";
+        return "null";
     }
 
 
     // 清除值
     public String removeMetaData(Player player, String key) {
-        player.removeMetadata(key, plugin);
+        player.removeMetadata(key, placeholderApi);
         return "OK";
+    }
+    public String removeMetaData(Player player, String key, String pluginName) {
+        Plugin customPlugin = Bukkit.getPluginManager().getPlugin(pluginName);
+        if (customPlugin != null) {
+            player.removeMetadata(key, customPlugin);
+            return "OK";
+        }
+        return "plugin not found";
     }
 
 
