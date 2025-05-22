@@ -77,6 +77,14 @@ public class FirMetaData extends PlaceholderExpansion {
                 String pluginName = args[2];
                 return removeMetaData(player, key, pluginName);
             }
+            case "getAndRemove" -> {
+                return getAndRemoveMetaData(player, key);
+            }
+            case "getAndRemovePlugin" -> {
+                if (args.length < 3) return "Error Args";
+                String pluginName = args[2];
+                return getAndRemoveMetaData(player, key, pluginName);
+            }
             case "has" -> {
                 return hasMetaData(player, key);
             }
@@ -90,13 +98,13 @@ public class FirMetaData extends PlaceholderExpansion {
     // 设置值
     public String setMetaData(Player player, String key, String value){
         player.setMetadata(key, new FixedMetadataValue(placeholderApi, value));
-        return "OK";
+        return value;
     }
     public String setMetaData(Player player, String key, String value, String pluginName){
         Plugin customPlugin = Bukkit.getPluginManager().getPlugin(pluginName);
         if (customPlugin != null) {
             player.setMetadata(key, new FixedMetadataValue(customPlugin, value));
-            return "OK";
+            return value;
         }
         return "plugin not found";
     }
@@ -123,6 +131,27 @@ public class FirMetaData extends PlaceholderExpansion {
         }
         return "plugin not found";
     }
+
+
+    // 读取并清除值, 如果值不存在则返回 "null"
+    public String getAndRemoveMetaData(Player player, String key) {
+        List<MetadataValue> metadata = player.getMetadata(key);
+        if (!metadata.isEmpty()) {
+            String result = metadata.getFirst().asString();
+            removeMetaData(player, key);
+            return result;
+        }
+        return "null";
+    };
+    public String getAndRemoveMetaData(Player player, String key, String pluginName) {
+        List<MetadataValue> metadata = player.getMetadata(key);
+        if (!metadata.isEmpty()) {
+            String result = metadata.getFirst().asString();
+            removeMetaData(player, key, pluginName);
+            return result;
+        }
+        return "null";
+    };
 
 
     // 存在值

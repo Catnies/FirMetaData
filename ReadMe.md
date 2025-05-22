@@ -24,11 +24,13 @@ FirMetadata 是一个 PlaceholderAPI 的拓展, 主要通过 papi 对玩家的 M
 ## 💻 使用方法
 您可以使用 [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245)  插件进行操作。
 
-| 占位符                                             | 说明                                                       |
-|-------------------------------------------------|----------------------------------------------------------|
-| `%firmetadata_set,testkey,something%`           | 为玩家设置一个metadata, 键 `testkey`, 值 `something`              |
-| `%firmetadata_setPlugin,testkey,something,CMI%` | 为玩家设置一个metadata, 键 `testkey`, 值 `something`, 传入插件为 `CMI` |
-| `%firmetadata_get,testkey%`                     | 获取玩家的metadata, 键 `testkey`                               |
-| `%firmetadata_remove,testkey%`                  | 删除玩家的metadata, 键 `testkey`                               |
-| `%firmetadata_removePlugin,testkey,CMI%`        | 删除玩家的metadata, 键 `testkey`, 传入插件为 `CMI`                  |
-| `%firmetadata_has,testkey%`                     | 检查玩家是否有某个metadata, 返回值为 `yes` 或 `no`                     |
+| 占位符                                              | 说明                                                              |
+|--------------------------------------------------|-----------------------------------------------------------------|
+| `%firmetadata_set,testkey,something%`            | 为玩家设置一个metadata, 键 `testkey`, 值 `something`, 返回设置值              |
+| `%firmetadata_setPlugin,testkey,something,CMI%`  | 为玩家设置一个metadata, 键 `testkey`, 值 `something`, 传入插件为 `CMI`, 返回设置值 |
+| `%firmetadata_get,testkey%`                      | 获取玩家的metadata, 键 `testkey`                                      |
+| `%firmetadata_remove,testkey%`                   | 删除玩家的metadata, 键 `testkey`                                      |
+| `%firmetadata_removePlugin,testkey,CMI%`         | 删除玩家的metadata, 键 `testkey`, 传入插件为 `CMI`                         |
+| `%firmetadata_getAndRemove,testkey%`             | 获取并删除玩家的metadata, 键 `testkey`                                   |
+| `%firmetadata_getAndRemovePlugin,testkey,CMI%`   | 获取并删除玩家的metadata, 键 `testkey`, 传入插件为 `CMI`                      |
+| `%firmetadata_has,testkey%`                      | 检查玩家是否有某个metadata, 返回值为 `yes` 或 `no`                            |
